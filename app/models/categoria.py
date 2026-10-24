@@ -3,6 +3,7 @@ from sqlalchemy.orm import mapped_column, Mapped
 
 from app.core.database import Base
 
+
 class Categoria(Base):
     __tablename__ = "categorias"
 
