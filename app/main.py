@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.core.exceptions import registrar_handlers
-from app.routers import categoria
+from app.routers import categoria, fornecedor, movimentacao, produto
 
 app = FastAPI(
     title="API Estoque Prosel",
@@ -12,6 +12,9 @@ app = FastAPI(
 registrar_handlers(app)
 
 app.include_router(categoria.router)
+app.include_router(fornecedor.router)
+app.include_router(produto.router)
+app.include_router(movimentacao.router)
 
 
 @app.get("/health")
