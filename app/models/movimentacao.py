@@ -14,17 +14,23 @@ class TipoMovimentacao(str, enum.Enum):
 
 class Movimentacao(Base):
     __tablename__ = "movimentacoes"
-    __table_args__ = (CheckConstraint("quantidade > 0", name="ck_movimentacoes_quantidade_positiva"),)
+    __table_args__ = (
+        CheckConstraint("quantidade > 0", name="ck_movimentacoes_quantidade_positiva"),
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     tipo: Mapped[TipoMovimentacao] = mapped_column(
-      Enum(
-        TipoMovimentacao,
+        Enum(
+            TipoMovimentacao,
             name="tipo_movimentacao",
             values_callable=lambda e: [m.value for m in e],
-       ),
-      nullable=False,
+        ),
+        nullable=False,
     )
-    produto_id: Mapped[int] = mapped_column(ForeignKey("produtos.id", ondelete="RESTRICT"), nullable=False)
+    produto_id: Mapped[int] = mapped_column(
+        ForeignKey("produtos.id", ondelete="RESTRICT"), nullable=False
+    )
     quantidade: Mapped[int] = mapped_column(nullable=False)
-    data: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    data: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), nullable=False
+    )
