@@ -1,0 +1,2984 @@
+{
+  "info": {
+    "name": "API de Estoque - Prosel Ecomp Jr. 2026.2",
+    "description": "Collection da API de estoque (FastAPI + PostgreSQL).\n\nComo usar: suba a API (uvicorn app.main:app --reload) e execute as requisições na ordem das pastas. As requisições de criação salvam automaticamente os IDs nas variáveis da collection. A pasta de exclusões deve ser executada por último.\n\nTodo erro segue o formato {\"erro\": \"CODIGO\", \"mensagem\": \"texto\"}.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "0. Saúde",
+      "description": "",
+      "item": [
+        {
+          "name": "Health check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"ok\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "1. Categorias",
+      "description": "",
+      "item": [
+        {
+          "name": "Criar categoria",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/categorias",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias"
+              ]
+            },
+            "description": "Cria uma categoria. O nome é único.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Eletrônicos\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "201 Criada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias"
+                  ]
+                },
+                "description": "Cria uma categoria. O nome é único.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Eletrônicos\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Eletrônicos\"\n}"
+            },
+            {
+              "name": "400 Nome vazio",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias"
+                  ]
+                },
+                "description": "Cria uma categoria. O nome é único.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Eletrônicos\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: body -> nome: String should have at least 1 character\"\n}"
+            },
+            {
+              "name": "409 Nome duplicado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias"
+                  ]
+                },
+                "description": "Cria uma categoria. O nome é único.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Eletrônicos\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Já existe uma categoria cadastrada com o nome 'Eletrônicos'.\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set(\"categoriaId\", pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar categorias",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categorias?skip=0&limit=100",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias"
+              ],
+              "query": [
+                {
+                  "key": "skip",
+                  "value": "0",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Lista paginada, ordenada por id."
+          },
+          "response": [
+            {
+              "name": "200 Lista",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": "Lista paginada, ordenada por id."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"nome\": \"Eletrônicos\"\n  }\n]"
+            },
+            {
+              "name": "400 skip negativo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": "Lista paginada, ordenada por id."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: query -> skip: Input should be greater than or equal to 0\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Buscar categoria por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias",
+                "{{categoriaId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 Encontrada",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Eletrônicos\"\n}"
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Categoria 999 não encontrada.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Atualizar categoria",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias",
+                "{{categoriaId}}"
+              ]
+            },
+            "description": "PUT substitui o recurso inteiro: o nome é obrigatório.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Eletrônicos e Acessórios\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 Atualizada",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": "PUT substitui o recurso inteiro: o nome é obrigatório.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Eletrônicos e Acessórios\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Eletrônicos e Acessórios\"\n}"
+            },
+            {
+              "name": "400 Nome ausente",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": "PUT substitui o recurso inteiro: o nome é obrigatório.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Eletrônicos e Acessórios\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: body -> nome: Field required\"\n}"
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": "PUT substitui o recurso inteiro: o nome é obrigatório.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Eletrônicos e Acessórios\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Categoria 999 não encontrada.\"\n}"
+            },
+            {
+              "name": "409 Nome de outra categoria",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": "PUT substitui o recurso inteiro: o nome é obrigatório.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Eletrônicos e Acessórios\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Já existe outra categoria cadastrada com o nome 'Eletrônicos e Acessórios'.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Fornecedores",
+      "description": "",
+      "item": [
+        {
+          "name": "Criar fornecedor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/fornecedores",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "fornecedores"
+              ]
+            },
+            "description": "CNPJ (dígitos verificadores validados, guardado só com 14 dígitos) e e-mail são únicos.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75999990000\",\n  \"email\": \"contato@sol.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "201 Criado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores"
+                  ]
+                },
+                "description": "CNPJ (dígitos verificadores validados, guardado só com 14 dígitos) e e-mail são únicos.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75999990000\",\n  \"email\": \"contato@sol.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11222333000181\",\n  \"telefone\": \"75999990000\",\n  \"email\": \"contato@sol.com\"\n}"
+            },
+            {
+              "name": "400 CNPJ inválido",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores"
+                  ]
+                },
+                "description": "CNPJ (dígitos verificadores validados, guardado só com 14 dígitos) e e-mail são únicos.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75999990000\",\n  \"email\": \"contato@sol.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: body -> cnpj: Value error, CNPJ inválido (dígitos verificadores não conferem).\"\n}"
+            },
+            {
+              "name": "409 CNPJ duplicado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores"
+                  ]
+                },
+                "description": "CNPJ (dígitos verificadores validados, guardado só com 14 dígitos) e e-mail são únicos.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75999990000\",\n  \"email\": \"contato@sol.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Já existe um fornecedor cadastrado com este CNPJ.\"\n}"
+            },
+            {
+              "name": "409 E-mail duplicado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores"
+                  ]
+                },
+                "description": "CNPJ (dígitos verificadores validados, guardado só com 14 dígitos) e e-mail são únicos.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75999990000\",\n  \"email\": \"contato@sol.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Já existe um fornecedor cadastrado com este e-mail.\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set(\"fornecedorId\", pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar fornecedores",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/fornecedores?skip=0&limit=100",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "fornecedores"
+              ],
+              "query": [
+                {
+                  "key": "skip",
+                  "value": "0",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 Lista",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": ""
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"nome\": \"Importadora Sol\",\n    \"cnpj\": \"11222333000181\",\n    \"telefone\": \"75999990000\",\n    \"email\": \"contato@sol.com\"\n  }\n]"
+            },
+            {
+              "name": "400 skip negativo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: query -> skip: Input should be greater than or equal to 0\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Buscar fornecedor por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "fornecedores",
+                "{{fornecedorId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 Encontrado",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11222333000181\",\n  \"telefone\": \"75999990000\",\n  \"email\": \"contato@sol.com\"\n}"
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Fornecedor 999 não encontrado.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Atualizar fornecedor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "fornecedores",
+                "{{fornecedorId}}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75988887777\",\n  \"email\": \"contato@sol.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 Atualizado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": "",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75988887777\",\n  \"email\": \"contato@sol.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11222333000181\",\n  \"telefone\": \"75988887777\",\n  \"email\": \"contato@sol.com\"\n}"
+            },
+            {
+              "name": "400 E-mail inválido",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": "",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75988887777\",\n  \"email\": \"contato@sol.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: body -> email: value is not a valid email address\"\n}"
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": "",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75988887777\",\n  \"email\": \"contato@sol.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Fornecedor 999 não encontrado.\"\n}"
+            },
+            {
+              "name": "409 CNPJ de outro fornecedor",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": "",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Importadora Sol\",\n  \"cnpj\": \"11.222.333/0001-81\",\n  \"telefone\": \"75988887777\",\n  \"email\": \"contato@sol.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Já existe um fornecedor cadastrado com este CNPJ.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3. Produtos",
+      "description": "",
+      "item": [
+        {
+          "name": "Criar produto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/produtos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos"
+              ]
+            },
+            "description": "Nasce com estoque 0: o saldo só muda por movimentação. Categoria e fornecedor precisam existir.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "201 Criado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                },
+                "description": "Nasce com estoque 0: o saldo só muda por movimentação. Categoria e fornecedor precisam existir.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"quantidade_em_estoque\": 0,\n  \"estoque_minimo\": 5,\n  \"data_cadastro\": \"2026-10-25T12:00:00.000000-03:00\",\n  \"categoria_id\": 1,\n  \"fornecedor_id\": 1\n}"
+            },
+            {
+              "name": "400 Preço negativo",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                },
+                "description": "Nasce com estoque 0: o saldo só muda por movimentação. Categoria e fornecedor precisam existir.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: body -> preco_custo: Input should be greater than or equal to 0\"\n}"
+            },
+            {
+              "name": "404 Categoria inexistente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                },
+                "description": "Nasce com estoque 0: o saldo só muda por movimentação. Categoria e fornecedor precisam existir.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Categoria 999 não encontrada.\"\n}"
+            },
+            {
+              "name": "409 SKU duplicado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ]
+                },
+                "description": "Nasce com estoque 0: o saldo só muda por movimentação. Categoria e fornecedor precisam existir.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Já existe um produto cadastrado com o SKU 'FONE-001'.\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set(\"produtoId\", pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Listar produtos (com filtros)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/produtos?skip=0&limit=100",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos"
+              ],
+              "query": [
+                {
+                  "key": "nome",
+                  "value": "fone",
+                  "disabled": true
+                },
+                {
+                  "key": "categoria_id",
+                  "value": "{{categoriaId}}",
+                  "disabled": true
+                },
+                {
+                  "key": "fornecedor_id",
+                  "value": "{{fornecedorId}}",
+                  "disabled": true
+                },
+                {
+                  "key": "skip",
+                  "value": "0",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Filtros opcionais: nome (busca parcial), categoria_id, fornecedor_id. Ative os parâmetros desejados."
+          },
+          "response": [
+            {
+              "name": "200 Lista",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ],
+                  "query": [
+                    {
+                      "key": "nome",
+                      "value": "fone",
+                      "disabled": true
+                    },
+                    {
+                      "key": "categoria_id",
+                      "value": "{{categoriaId}}",
+                      "disabled": true
+                    },
+                    {
+                      "key": "fornecedor_id",
+                      "value": "{{fornecedorId}}",
+                      "disabled": true
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": "Filtros opcionais: nome (busca parcial), categoria_id, fornecedor_id. Ative os parâmetros desejados."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"nome\": \"Fone Bluetooth\",\n    \"sku\": \"FONE-001\",\n    \"preco_custo\": \"35.00\",\n    \"preco_venda\": \"69.90\",\n    \"quantidade_em_estoque\": 0,\n    \"estoque_minimo\": 5,\n    \"data_cadastro\": \"2026-10-25T12:00:00.000000-03:00\",\n    \"categoria_id\": 1,\n    \"fornecedor_id\": 1\n  }\n]"
+            },
+            {
+              "name": "400 limit inválido",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos"
+                  ],
+                  "query": [
+                    {
+                      "key": "nome",
+                      "value": "fone",
+                      "disabled": true
+                    },
+                    {
+                      "key": "categoria_id",
+                      "value": "{{categoriaId}}",
+                      "disabled": true
+                    },
+                    {
+                      "key": "fornecedor_id",
+                      "value": "{{fornecedorId}}",
+                      "disabled": true
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": "Filtros opcionais: nome (busca parcial), categoria_id, fornecedor_id. Ative os parâmetros desejados."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: query -> limit: Input should be less than or equal to 500\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Produtos com estoque no mínimo ou abaixo",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/produtos/estoque-minimo?skip=0&limit=100",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos",
+                "estoque-minimo"
+              ],
+              "query": [
+                {
+                  "key": "skip",
+                  "value": "0",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Retorna produtos com quantidade_em_estoque <= estoque_minimo, do mais crítico ao menos crítico."
+          },
+          "response": [
+            {
+              "name": "200 Lista",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/estoque-minimo?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "estoque-minimo"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": "Retorna produtos com quantidade_em_estoque <= estoque_minimo, do mais crítico ao menos crítico."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"nome\": \"Fone Bluetooth\",\n    \"sku\": \"FONE-001\",\n    \"preco_custo\": \"35.00\",\n    \"preco_venda\": \"69.90\",\n    \"quantidade_em_estoque\": 0,\n    \"estoque_minimo\": 5,\n    \"data_cadastro\": \"2026-10-25T12:00:00.000000-03:00\",\n    \"categoria_id\": 1,\n    \"fornecedor_id\": 1\n  }\n]"
+            },
+            {
+              "name": "400 skip negativo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/estoque-minimo?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "estoque-minimo"
+                  ],
+                  "query": [
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": "Retorna produtos com quantidade_em_estoque <= estoque_minimo, do mais crítico ao menos crítico."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: query -> skip: Input should be greater than or equal to 0\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Buscar produto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos",
+                "{{produtoId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 Encontrado",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{produtoId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"quantidade_em_estoque\": 0,\n  \"estoque_minimo\": 5,\n  \"data_cadastro\": \"2026-10-25T12:00:00.000000-03:00\",\n  \"categoria_id\": 1,\n  \"fornecedor_id\": 1\n}"
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{produtoId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Produto 999 não encontrado.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Atualizar produto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos",
+                "{{produtoId}}"
+              ]
+            },
+            "description": "Não aceita quantidade_em_estoque: editar o produto nunca burla a auditoria.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "200 Atualizado",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{produtoId}}"
+                  ]
+                },
+                "description": "Não aceita quantidade_em_estoque: editar o produto nunca burla a auditoria.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"quantidade_em_estoque\": 0,\n  \"estoque_minimo\": 5,\n  \"data_cadastro\": \"2026-10-25T12:00:00.000000-03:00\",\n  \"categoria_id\": 1,\n  \"fornecedor_id\": 1\n}"
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{produtoId}}"
+                  ]
+                },
+                "description": "Não aceita quantidade_em_estoque: editar o produto nunca burla a auditoria.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Produto 999 não encontrado.\"\n}"
+            },
+            {
+              "name": "409 SKU de outro produto",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{produtoId}}"
+                  ]
+                },
+                "description": "Não aceita quantidade_em_estoque: editar o produto nunca burla a auditoria.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nome\": \"Fone Bluetooth\",\n  \"sku\": \"FONE-001\",\n  \"preco_custo\": \"35.00\",\n  \"preco_venda\": \"69.90\",\n  \"estoque_minimo\": 5,\n  \"categoria_id\": {{categoriaId}},\n  \"fornecedor_id\": {{fornecedorId}}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Já existe um produto cadastrado com o SKU 'FONE-001'.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Movimentações (imutáveis)",
+      "description": "",
+      "item": [
+        {
+          "name": "Registrar entrada",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/movimentacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movimentacoes"
+              ]
+            },
+            "description": "Soma ao estoque e registra o histórico na mesma transação.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"entrada\",\n  \"produto_id\": {{produtoId}},\n  \"quantidade\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "201 Registrada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes"
+                  ]
+                },
+                "description": "Soma ao estoque e registra o histórico na mesma transação.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tipo\": \"entrada\",\n  \"produto_id\": {{produtoId}},\n  \"quantidade\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"tipo\": \"entrada\",\n  \"produto_id\": 1,\n  \"quantidade\": 10,\n  \"data\": \"2026-10-25T12:00:00.000000-03:00\"\n}"
+            },
+            {
+              "name": "400 Quantidade zero",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes"
+                  ]
+                },
+                "description": "Soma ao estoque e registra o histórico na mesma transação.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tipo\": \"entrada\",\n  \"produto_id\": {{produtoId}},\n  \"quantidade\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"DADOS_INVALIDOS\",\n  \"mensagem\": \"Dados inválidos: body -> quantidade: Input should be greater than 0\"\n}"
+            },
+            {
+              "name": "404 Produto inexistente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes"
+                  ]
+                },
+                "description": "Soma ao estoque e registra o histórico na mesma transação.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tipo\": \"entrada\",\n  \"produto_id\": {{produtoId}},\n  \"quantidade\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Produto 999 não encontrado.\"\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  pm.collectionVariables.set(\"movimentacaoId\", pm.response.json().id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Registrar saída",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/movimentacoes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movimentacoes"
+              ]
+            },
+            "description": "Subtrai do estoque. Recusa se a quantidade for maior que o saldo (lock pessimista evita corrida).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"saida\",\n  \"produto_id\": {{produtoId}},\n  \"quantidade\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "201 Registrada",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes"
+                  ]
+                },
+                "description": "Subtrai do estoque. Recusa se a quantidade for maior que o saldo (lock pessimista evita corrida).",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tipo\": \"saida\",\n  \"produto_id\": {{produtoId}},\n  \"quantidade\": 3\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2,\n  \"tipo\": \"saida\",\n  \"produto_id\": 1,\n  \"quantidade\": 3,\n  \"data\": \"2026-10-25T12:00:00.000000-03:00\"\n}"
+            },
+            {
+              "name": "400 Estoque insuficiente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes"
+                  ]
+                },
+                "description": "Subtrai do estoque. Recusa se a quantidade for maior que o saldo (lock pessimista evita corrida).",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tipo\": \"saida\",\n  \"produto_id\": {{produtoId}},\n  \"quantidade\": 3\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"ESTOQUE_INSUFICIENTE\",\n  \"mensagem\": \"Estoque insuficiente: disponível 7, solicitado 50.\"\n}"
+            },
+            {
+              "name": "404 Produto inexistente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes"
+                  ]
+                },
+                "description": "Subtrai do estoque. Recusa se a quantidade for maior que o saldo (lock pessimista evita corrida).",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tipo\": \"saida\",\n  \"produto_id\": {{produtoId}},\n  \"quantidade\": 3\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Produto 999 não encontrado.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Listar histórico (com filtros)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/movimentacoes?skip=0&limit=100",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movimentacoes"
+              ],
+              "query": [
+                {
+                  "key": "data_inicio",
+                  "value": "2026-10-01",
+                  "disabled": true
+                },
+                {
+                  "key": "data_fim",
+                  "value": "2026-12-31",
+                  "disabled": true
+                },
+                {
+                  "key": "fornecedor_id",
+                  "value": "{{fornecedorId}}",
+                  "disabled": true
+                },
+                {
+                  "key": "produto_id",
+                  "value": "{{produtoId}}",
+                  "disabled": true
+                },
+                {
+                  "key": "tipo",
+                  "value": "entrada",
+                  "disabled": true
+                },
+                {
+                  "key": "skip",
+                  "value": "0",
+                  "disabled": false
+                },
+                {
+                  "key": "limit",
+                  "value": "100",
+                  "disabled": false
+                }
+              ]
+            },
+            "description": "Filtros opcionais por período (data_fim inclusiva), fornecedor, produto e tipo. Ative os parâmetros desejados."
+          },
+          "response": [
+            {
+              "name": "200 Lista",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes"
+                  ],
+                  "query": [
+                    {
+                      "key": "data_inicio",
+                      "value": "2026-10-01",
+                      "disabled": true
+                    },
+                    {
+                      "key": "data_fim",
+                      "value": "2026-12-31",
+                      "disabled": true
+                    },
+                    {
+                      "key": "fornecedor_id",
+                      "value": "{{fornecedorId}}",
+                      "disabled": true
+                    },
+                    {
+                      "key": "produto_id",
+                      "value": "{{produtoId}}",
+                      "disabled": true
+                    },
+                    {
+                      "key": "tipo",
+                      "value": "entrada",
+                      "disabled": true
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": "Filtros opcionais por período (data_fim inclusiva), fornecedor, produto e tipo. Ative os parâmetros desejados."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 2,\n    \"tipo\": \"saida\",\n    \"produto_id\": 1,\n    \"quantidade\": 3,\n    \"data\": \"2026-10-25T12:00:00.000000-03:00\"\n  },\n  {\n    \"id\": 1,\n    \"tipo\": \"entrada\",\n    \"produto_id\": 1,\n    \"quantidade\": 10,\n    \"data\": \"2026-10-25T12:00:00.000000-03:00\"\n  }\n]"
+            },
+            {
+              "name": "400 Período invertido",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes?skip=0&limit=100",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes"
+                  ],
+                  "query": [
+                    {
+                      "key": "data_inicio",
+                      "value": "2026-10-01",
+                      "disabled": true
+                    },
+                    {
+                      "key": "data_fim",
+                      "value": "2026-12-31",
+                      "disabled": true
+                    },
+                    {
+                      "key": "fornecedor_id",
+                      "value": "{{fornecedorId}}",
+                      "disabled": true
+                    },
+                    {
+                      "key": "produto_id",
+                      "value": "{{produtoId}}",
+                      "disabled": true
+                    },
+                    {
+                      "key": "tipo",
+                      "value": "entrada",
+                      "disabled": true
+                    },
+                    {
+                      "key": "skip",
+                      "value": "0",
+                      "disabled": false
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": false
+                    }
+                  ]
+                },
+                "description": "Filtros opcionais por período (data_fim inclusiva), fornecedor, produto e tipo. Ative os parâmetros desejados."
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"REGRA_DE_NEGOCIO\",\n  \"mensagem\": \"data_inicio não pode ser posterior a data_fim.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Buscar movimentação por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/movimentacoes/{{movimentacaoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movimentacoes",
+                "{{movimentacaoId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "200 Encontrada",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes/{{movimentacaoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes",
+                    "{{movimentacaoId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"tipo\": \"entrada\",\n  \"produto_id\": 1,\n  \"quantidade\": 10,\n  \"data\": \"2026-10-25T12:00:00.000000-03:00\"\n}"
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes/{{movimentacaoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes",
+                    "{{movimentacaoId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Movimentação 999 não encontrada.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Tentar editar movimentação (deve falhar)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/movimentacoes/{{movimentacaoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movimentacoes",
+                "{{movimentacaoId}}"
+              ]
+            },
+            "description": "Prova da imutabilidade: não existe rota de edição.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantidade\": 99\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "405 Imutável",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes/{{movimentacaoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes",
+                    "{{movimentacaoId}}"
+                  ]
+                },
+                "description": "Prova da imutabilidade: não existe rota de edição.",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantidade\": 99\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"METODO_NAO_PERMITIDO\",\n  \"mensagem\": \"Método não permitido para esta rota.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Tentar excluir movimentação (deve falhar)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/movimentacoes/{{movimentacaoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movimentacoes",
+                "{{movimentacaoId}}"
+              ]
+            },
+            "description": "Prova da imutabilidade: não existe rota de exclusão."
+          },
+          "response": [
+            {
+              "name": "405 Imutável",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/movimentacoes/{{movimentacaoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movimentacoes",
+                    "{{movimentacaoId}}"
+                  ]
+                },
+                "description": "Prova da imutabilidade: não existe rota de exclusão."
+              },
+              "status": "Method Not Allowed",
+              "code": 405,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"METODO_NAO_PERMITIDO\",\n  \"mensagem\": \"Método não permitido para esta rota.\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5. Exclusões (executar por último)",
+      "description": "",
+      "item": [
+        {
+          "name": "Excluir produto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "produtos",
+                "{{produtoId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "204 Excluído (sem movimentações)",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{produtoId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": ""
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{produtoId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Produto 999 não encontrado.\"\n}"
+            },
+            {
+              "name": "409 Possui movimentações",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/produtos/{{produtoId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "produtos",
+                    "{{produtoId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Não é possível excluir o produto 1: ele possui movimentações de estoque registradas.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Excluir fornecedor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "fornecedores",
+                "{{fornecedorId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "204 Excluído (sem produtos)",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": ""
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Fornecedor 999 não encontrado.\"\n}"
+            },
+            {
+              "name": "409 Possui produtos",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/fornecedores/{{fornecedorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "fornecedores",
+                    "{{fornecedorId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Não é possível excluir o fornecedor 1: existem produtos vinculados a ele.\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Excluir categoria",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "categorias",
+                "{{categoriaId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": [
+            {
+              "name": "204 Excluída (sem produtos)",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": ""
+            },
+            {
+              "name": "404 Inexistente",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"NAO_ENCONTRADO\",\n  \"mensagem\": \"Categoria 999 não encontrada.\"\n}"
+            },
+            {
+              "name": "409 Possui produtos",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/categorias/{{categoriaId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "categorias",
+                    "{{categoriaId}}"
+                  ]
+                },
+                "description": ""
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"erro\": \"CONFLITO\",\n  \"mensagem\": \"Não é possível excluir a categoria 1 pois existem produtos vinculados a ela.\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "categoriaId",
+      "value": "1"
+    },
+    {
+      "key": "fornecedorId",
+      "value": "1"
+    },
+    {
+      "key": "produtoId",
+      "value": "1"
+    },
+    {
+      "key": "movimentacaoId",
+      "value": "1"
+    }
+  ]
+}
